@@ -1,0 +1,12 @@
+:aleatoriza 0
+:inicializa 0 3
+:carga test/inicio3.txt
+:lista
+1
+30
+0
+0
+1
+0
+0
+0

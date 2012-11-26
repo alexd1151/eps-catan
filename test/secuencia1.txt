@@ -1,0 +1,1 @@
+:carga test/partida1.txt

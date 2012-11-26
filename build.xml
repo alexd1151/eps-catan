@@ -1,0 +1,145 @@
+<!--
+  Fichero de configuracion para las practicas de POO
+  
+  Para pasar argumentos, modifica el valor de la propiedad "args".
+  O mas sencillo, basta con escribir lo siguiente desde linea de comandos:
+  ant -Dargs="<argumentos>" run   
+  
+  Cuando la practica funcione bien, modifica el valor de la propiedad "nombrezip"
+  y ejecuta: 
+  ant dist
+  
+  Si quieres aprender a editar este fichero, visita
+  http://ant.apache.org/manual/
+ -->
+
+<!-- // COMIENZO DE PARTE QUE DEPENDE DE PROYECTO (cambiar a gusto del usuario)  // -->
+
+<project name="p4" default="compile" basedir=".">
+
+  <!-- Argumentos con los que ejecutar la practica -->
+  <property name="args" value=""/>
+  <!-- Nombre del fichero zip a generar cuando se crea que todo funciona bien -->
+  <property name="nombrezip" value="p4a00.zip"/>   
+  <!-- Clase principal -->  
+  <property name="main" value="eps.catan.gui.VentanaPrincipal"/>  
+  <!-- Paquete del cual generar comentarios -->
+  <property name="javadoc-base" 
+        value="eps.catan, eps.catan.gui, eps.catan.accion, eps.cartas, eps.multij, eps.multij.gui, eps"/>
+    
+  <!-- Directorios -->
+  <property name="src" location="src"/>
+  <property name="build" location="classes"/>
+  <property name="dist" location="dist"/>
+  <property name="lib" location="lib"/>
+  <property name="test" location="test"/>
+  <property name="javadoc" location="javadoc"/>
+  
+<!-- // FIN DE PARTE QUE DEPENDE DE PROYECTO (lo que queda es generico) // -->
+
+  <!-- classpath (ruta donde se buscan clases; incluye librerias) -->
+  <path id="classpath.base">
+    <pathelement location="${build}"/>
+    <fileset dir="${lib}" includes="**/*.jar"/>      
+  </path> 
+  <path id="classpath.test">
+    <fileset dir="${test}" includes="*.jar" />
+    <path refid="classpath.base" />
+    <pathelement location="${test}" />
+  </path>
+  
+  <!-- inicializacion -->
+  <target name="init">
+    <tstamp/>
+    <mkdir dir="${lib}"/>    
+    <mkdir dir="${build}"/>
+    <mkdir dir="${javadoc}"/>
+    <copy todir="${build}">
+        <fileset dir="${src}" includes="**/*.png, **/*.html"/>
+    </copy> 
+  </target>
+
+  <!-- compila el proyecto -->
+  <target name="compile" depends="init"
+      description="compila todo">    
+    <javac classpathref="classpath.base" srcdir="${src}" destdir="${build}" debug="on">
+    </javac>
+  </target>
+
+  <!-- compila los 'stubs' necesarios para RMI -->
+  <target name="erremic" depends="compile" description="compile with rmic">
+    <rmic classname="eps.multij.Juego" base="${build}" classpath="${build}"/>
+    <rmic classname="eps.multij.JugadorConsola" base="${build}" classpath="${build}"/>
+    <rmic classname="eps.catan.gui.DialogoNuevaPartida" base="${build}" classpath="${build}"/>
+  </target>
+    
+  <!-- ejecuta el proyecto -->
+  <target name="run" depends="compile,erremic" description="ejecuta el programa">
+    <java classpathref="classpath.base" classname="${main}" fork="true">
+        <arg line="${args}"/>
+    </java>
+  </target>
+
+  <!-- limpia los ficheros generados -->
+  <target name="clean" 
+      description="limpia resultados de la compilacion">
+    <delete dir="${build}"/>
+    <delete dir="${dist}"/>
+  </target>
+  
+  <!-- compila las pruebas -->
+  <target name="compile-test" depends="compile">
+    <mkdir dir="${build}/test"/>
+    <javac srcdir="${test}" destdir="${build}/test" debug="true" classpathref="classpath.test">
+        <include name="**/*.java"/>
+    </javac>
+  </target>
+  
+  <!-- ejecuta las pruebas -->
+  <target name="test" depends="compile-test">
+      <junit printsummary="yes" haltonfailure="no">    
+        <classpath>
+          <path refid="classpath.test"/>
+          <pathelement location="${build}/test"/>
+        </classpath>
+
+        <formatter type="plain" usefile="false"/>
+        
+        <!-- si 'testcase' esta definida, usa eso en lugar de probar "todas" -->
+        <test name="${testcase}" todir="${build}/test" if="testcase"/>
+        <batchtest fork="yes" todir="${build}/test" unless="testcase">
+            <fileset dir="${test}">
+              <include name="**/*Test*.java"/>
+              <exclude name="**/AllTests.java"/>
+            </fileset>
+         </batchtest>
+      </junit>
+  </target>
+  
+  <target name="dist" description="genera la distribucion">
+    <delete dir="${dist}"/>
+    <delete dir="${javadoc}"/>
+  
+    <copy todir="${dist}">
+      <fileset dir="." includes="**/*.txt, **/*.java, **/*.html, **/*.png, build.xml"/>
+      <fileset dir="." includes="memoria.*, Memoria.*"/>
+    </copy>
+    <zip destfile="${nombrezip}" basedir="${dist}" includes="**"/>
+  </target>
+      
+  <!-- Genera la documentacion Javadoc correspondiente a la práctica -->
+  <target name="javadoc"
+    description="genera el javadoc para web">
+    <mkdir dir="${javadoc}"/>
+    <javadoc destdir="${javadoc}"
+       charset="Latin-1"
+       access="private"
+       source="${src}"
+       linksource="false"
+       windowtitle="API - ${javadoc-base}"
+       sourcepath="${src}"
+       packagenames="${javadoc-base}">
+    </javadoc>
+  </target>
+									  
+</project>

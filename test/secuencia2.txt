@@ -1,0 +1,16 @@
+:aleatoriza 0
+:inicializa 0 3
+:carga test/partida1.txt
+0
+0
+0
+0
+0
+0
+0
+0
+:lista
+2
+:lista
+0
+0

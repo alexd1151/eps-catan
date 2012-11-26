@@ -1,0 +1,56 @@
+Ronda: 3 Fase: Normal Turno: 0 Lados: 3
+{o, o, o, o, o, o, o, o, o, o, o, o, o, o, o, o, o, o}
+{m, m, m, m, m, m, m, m, m, m, m, m, m, m, m, m, m, m, m}
+{l, l, l, l, l, l, l, l, l, l, l, l, l, l, l, l, l, l, l}
+{r, r, r, r, r, r, r, r, r, r, r, r, r, r, r, r, r, r}
+{t, t, t, t, t, t, t, t, t, t, t, t, t, t, t}
+{s, p, p, m, s, a, m, s, s, m, c, a, s, s, s, p, a, p, s, c, s, c, s, s, s}
+          ~  ~  ~  ~  ~  ~  ~  ~          
+                 ?:3         ?:3          
+          ~  ~  // ~  ~  ~  // ~          
+       ~  ~                    ~  ~       
+        ?:3  Ov2   Ov4   La10             
+       ~ \\                    ~  ~       
+    ~  ~                          ~  ~    
+          Tr4   Ma10  Tr12  Ov11 =Ma:2    
+    ~  ~                          ~  ~    
+ ~  ~                                ~  ~ 
+ Tr:2= Ro3   Ma3    D    La5   Ro5        
+ ~  ~                                ~  ~ 
+    ~  ~                          ~  ~    
+          Tr8   Ov6   Ma9   Ma6  =Ro:2    
+    ~  ~                          ~  ~    
+       ~ //                    ~  ~       
+       La:2  La9   Tr8   Ro11             
+       ~  ~                    ~  ~       
+          ~  ~  \\ ~  ~  ~  \\ ~          
+                 ?:3        Ov:2          
+          ~  ~  ~  ~  ~  ~  ~  ~          
+Ladron: (4, 1)
+Lado -65536
+  desarrollos: {}
+  soldados: 0
+  recursos: {t, t, t, t}
+  max c/p/c: 13 3 4
+  medallas: 
+  caminos: (1, 5):Este (2, 6):NorEste 
+  poblados: (2, 5):Norte (2, 6):Norte 
+  ciudades: 
+Lado -1
+  desarrollos: {}
+  soldados: 0
+  recursos: {}
+  max c/p/c: 13 3 4
+  medallas: 
+  caminos: (4, 1):Este (4, 1):NorEste 
+  poblados: (5, 1):Norte (3, 5):Sur 
+  ciudades: 
+Lado -5075968
+  desarrollos: {}
+  soldados: 0
+  recursos: {o, r}
+  max c/p/c: 13 3 4
+  medallas: 
+  caminos: (2, 2):NorEste (3, 1):NorOeste 
+  poblados: (2, 2):Norte (5, 3):Sur 
+  ciudades: 
